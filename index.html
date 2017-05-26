@@ -26,6 +26,78 @@
 			<div class="slides">
 				<section>Slide 1</section>
 				<section>Slide 2</section>
+				
+				<section>
+					<section>
+						Modell
+					</section>
+					<section>
+						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;">
+							public class Prove
+							{
+								public int Lopenummer { get; }
+								public string Fag { get; }
+								public int Trinn { get; }
+
+								//Konstruktør
+								public Prove(int Id, string Fag, int Trinn)
+								{
+									...
+								}
+							}
+						</code></pre>
+					</section>
+					<section>
+						SQL
+						<pre><code class="SQL" data-trim contenteditable style="font-size: 18px;">
+							SELECT
+								[Lopenummer],
+								[Fag],
+								[Trinn]
+							FROM
+								[Prove].[Prove]
+							WHERE
+								[Lopenummer] = @blabla	
+						</code></pre>
+					</section>
+					<section>
+						SQL i F#
+						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
+							module GetProveQuery = 
+								open FSharp.Data
+								open UDIR.Prover.Models    
+								type private Query = SqlCommandProvider<"
+									SELECT
+										[Lopenummer],
+										[Fag],
+										[Trinn]
+									FROM
+										[Prove].[Prove]
+									WHERE
+										Lopenummer = @blabla"
+									, DbName
+									, SingleRow = true>
+						</code></pre>
+					</section>
+					<section>
+						
+						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
+								let RunAsync(proveId: int) = 
+									async { 
+										let! result = (Query.Create()).AsyncExecute(proveId)
+										return
+											result
+											|> Option.map (fun e -> 
+												new Prove(
+													e.Id,
+													e.Fag,
+													e.Trinn))
+											|> OptionUtils.getOrNull
+									}
+									|> Async.StartAsTask
+						</code></pre>
+					</section>
+				</section>
 			</div>
 		</div>
 
