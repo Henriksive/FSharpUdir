@@ -25,22 +25,30 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>Slide 1</section>
-				<section>Slide 2</section>
-				
+				<section>
+					<section>Hva trenger "alle" applikasjoner?</section>
+					<section>
+						<p>Objekt &#x2194 Database</p>
+					</section>
+				</section>
+				<section data-background="#ffffff">
+					<img width="200" height="200" data-src="images/udirlogo.png" style="box-shadow: none">
+					<h2>Utdanningsdirektoratet</h2>
+					<p class="fragment">Eksamener</p>
+					<p class="fragment">Prøver</p>
+				</section>
 				<section>
 					<section>
-						Modell
-					</section>
-					<section>
+						C#
 						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;">
 							public class Prove
 							{
-								public int Lopenummer { get; }
+								public int Provenummer { get; }
 								public string Fag { get; }
 								public int Trinn { get; }
 
 								//Konstruktør
-								public Prove(int Id, string Fag, int Trinn)
+								public Prove(int provenummer, string fag, int trinn)
 								{
 									...
 								}
@@ -50,14 +58,37 @@
 					<section>
 						SQL
 						<pre><code class="SQL" data-trim contenteditable style="font-size: 18px;">
-							SELECT
-								[Lopenummer],
-								[Fag],
-								[Trinn]
-							FROM
-								[Prove].[Prove]
-							WHERE
-								[Lopenummer] = @blabla	
+							INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn)
+							VALUES ('999', 'Norsk', '5')
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="C#" data-trim contenteditable style="font-size: 10px;">
+							var prove = new Prove(999, "Norsk", 5)
+							using (SqlConnection connection = new SqlConnection("ConnectionStringHere"))
+							{
+								using (SqlCommand command = new SqlCommand())
+								{
+									command.Connection = connection;
+									command.CommandType = CommandType.Text;
+									command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) VALUES (@provenummer, @fag, @trinn)";
+									command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
+									command.Parameters.AddWithValue("@fag", prove.Fag);
+									command.Parameters.AddWithValue("@trinn", prove.Trinn);
+
+									connection.Open();
+									int recordsAffected = command.ExecuteNonQuery();
+								}
+							}
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
+							var prove = new Prove(999, "Norsk", 5)
+							command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) VALUES (@provenummer, @fag, @trinn)";
+							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
+							command.Parameters.AddWithValue("@fag", prove.Fag);
+							command.Parameters.AddWithValue("@trinn", prove.Trinn);
 						</code></pre>
 					</section>
 					<section>
@@ -68,28 +99,28 @@
 								open UDIR.Prover.Models    
 								type private Query = SqlCommandProvider<"
 									SELECT
-										[Lopenummer],
+										[Provenummer],
 										[Fag],
 										[Trinn]
 									FROM
 										[Prove].[Prove]
 									WHERE
-										Lopenummer = @blabla"
+										Provenummer = @blabla"
 									, DbName
 									, SingleRow = true>
 						</code></pre>
 					</section>
 					<section>
-						
+						Kjøre
 						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
-								let RunAsync(proveId: int) = 
+								let RunAsync(provenummer: int) = 
 									async { 
 										let! result = (Query.Create()).AsyncExecute(proveId)
 										return
 											result
 											|> Option.map (fun e -> 
 												new Prove(
-													e.Id,
+													e.Provenummer,
 													e.Fag,
 													e.Trinn))
 											|> OptionUtils.getOrNull
