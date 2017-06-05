@@ -30,6 +30,9 @@
 					<section>
 						<p>Objekt &#x2194 Database</p>
 					</section>
+					<section>
+						
+					</section>
 				</section>
 				<section data-background="#ffffff">
 					<img width="200" height="200" data-src="images/udirlogo.png" style="box-shadow: none">
@@ -85,10 +88,21 @@
 					<section>
 						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
 							var prove = new Prove(999, "Norsk", 5)
+							...
 							command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) VALUES (@provenummer, @fag, @trinn)";
 							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
 							command.Parameters.AddWithValue("@fag", prove.Fag);
 							command.Parameters.AddWithValue("@trinn", prove.Trinn);
+						</code></pre>
+					</section>
+					<section>
+						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
+							var prove = new Prove(999, "", 5)
+							...
+							command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinnn) VALUES (@provenummer, @fag, @trinn)";
+							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
+							command.Parameters.AddWithValue("@fag", prove.Fag);
+							command.Parameters.AddWithValue("@trinn", prove.Fag);
 						</code></pre>
 					</section>
 					<section>
