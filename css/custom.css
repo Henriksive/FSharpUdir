@@ -1,0 +1,15 @@
+.green_txt {
+	color: green;
+}
+.red_txt {
+	color: red;
+}
+
+.blink_me {
+  animation: blinker 0.2s linear infinite;
+  color: green;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}

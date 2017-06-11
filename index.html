@@ -8,9 +8,11 @@
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+		<link rel="stylesheet" href="css/custom.css">
+		
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="lib/css/vs2015.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -24,26 +26,51 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
+				<section><h2>Stay sharp med F#</h2></section>
 				<section>
-					<section>Hva trenger "alle" applikasjoner?</section>
 					<section>
-						<p>Objekt &#x2194 Database</p>
+						Typet databaselag
 					</section>
 					<section>
-						
+						<h2>Tech radar 2017</h2>
+						<div class="fragment">
+							<p class="green_txt">Typet Javascript</p>
+							<p class="green_txt">ELM</p>
+							<p class="green_txt">Go</p>
+						</div>
+						<div class="fragment">
+							<p class="red_txt">JPA</p>
+						</div>
+						<div class="fragment">
+							<p class="green_txt blink_me">F#</hp>
+						</div>
+					</section>
+					<section>
+						<p>Unngå runtime-feil</p>
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
+							string tekst = "Hallo verden";
+							int tall = tekst;
+						</code></pre>
+					</section>
+					<section>
+						<p>Lesbarhet</p>
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
+							public void Repeat(int antallGanger){ ... }
+
+							void Main()
+							{
+								Repeat(5);
+							}
+						</code></pre>						
 					</section>
 				</section>
-				<section data-background="#ffffff">
-					<img width="200" height="200" data-src="images/udirlogo.png" style="box-shadow: none">
-					<h2>Utdanningsdirektoratet</h2>
-					<p class="fragment">Eksamener</p>
-					<p class="fragment">Prøver</p>
-				</section>
 				<section>
+					<section>
+						<h2>Objekt &#x2194 Database</h2>
+					</section>
 					<section>
 						C#
-						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;">
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
 							public class Prove
 							{
 								public int Provenummer { get; }
@@ -66,15 +93,17 @@
 						</code></pre>
 					</section>
 					<section>
-						<pre><code class="C#" data-trim contenteditable style="font-size: 10px;">
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 10px;">
 							var prove = new Prove(999, "Norsk", 5)
+							var kommando = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) " 
+								+ "VALUES (@provenummer, @fag, @trinn)";
 							using (SqlConnection connection = new SqlConnection("ConnectionStringHere"))
 							{
 								using (SqlCommand command = new SqlCommand())
 								{
 									command.Connection = connection;
 									command.CommandType = CommandType.Text;
-									command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) VALUES (@provenummer, @fag, @trinn)";
+									command.CommandText = kommando;
 									command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
 									command.Parameters.AddWithValue("@fag", prove.Fag);
 									command.Parameters.AddWithValue("@trinn", prove.Trinn);
@@ -86,24 +115,33 @@
 						</code></pre>
 					</section>
 					<section>
-						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
 							var prove = new Prove(999, "Norsk", 5)
+							var kommando = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) " 
+								+ "VALUES (@provenummer, @fag, @trinn)";
 							...
-							command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) VALUES (@provenummer, @fag, @trinn)";
+							command.CommandText = kommando;
 							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
 							command.Parameters.AddWithValue("@fag", prove.Fag);
 							command.Parameters.AddWithValue("@trinn", prove.Trinn);
 						</code></pre>
 					</section>
 					<section>
-						<pre><code class="C#" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
 							var prove = new Prove(999, "", 5)
+							var kommando = "INSERT INTO [Prove].[Prøve] (Provenummer, Fag, Trinn) " 
+								+ "VALUES (@provenummer, @fag, @trinn)";
 							...
-							command.CommandText = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinnn) VALUES (@provenummer, @fag, @trinn)";
+							command.CommandText = kommando;
 							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
 							command.Parameters.AddWithValue("@fag", prove.Fag);
 							command.Parameters.AddWithValue("@trinn", prove.Fag);
 						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Not your grandfather's ORM</h2>
 					</section>
 					<section>
 						SQL i F#
@@ -119,7 +157,7 @@
 									FROM
 										[Prove].[Prove]
 									WHERE
-										Provenummer = @blabla"
+										Provenummer = @provenummer"
 									, DbName
 									, SingleRow = true>
 						</code></pre>
@@ -129,7 +167,7 @@
 						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
 								let RunAsync(provenummer: int) = 
 									async { 
-										let! result = (Query.Create()).AsyncExecute(proveId)
+										let! result = (Query.Create()).AsyncExecute(provenummer)
 										return
 											result
 											|> Option.map (fun e -> 
