@@ -26,24 +26,10 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section><h2>Stay sharp med F#</h2></section>
+				<section><h2>Typesikkerhet i datalaget med F#</h2></section>
 				<section>
 					<section>
-						Typet databaselag
-					</section>
-					<section>
-						<h2>Tech radar 2017</h2>
-						<div class="fragment">
-							<p class="green_txt">Typet Javascript</p>
-							<p class="green_txt">ELM</p>
-							<p class="green_txt">Go</p>
-						</div>
-						<div class="fragment">
-							<p class="red_txt">JPA</p>
-						</div>
-						<div class="fragment">
-							<p class="green_txt blink_me">F#</hp>
-						</div>
+						Typet datalag
 					</section>
 					<section>
 						<p>Unngå runtime-feil</p>
@@ -63,11 +49,22 @@
 							}
 						</code></pre>						
 					</section>
+					<section>
+						<h2>Tech radar 2017</h2>
+						<div class="fragment">
+							<p class="green_txt">Typet Javascript</p>
+							<p class="green_txt">ELM</p>
+							<p class="green_txt">Go</p>
+						</div>
+						<div class="fragment">
+							<p class="red_txt">JPA</p>
+						</div>
+						<div class="fragment">
+							<p class="green_txt blink_me">F#</hp>
+						</div>
+					</section>
 				</section>
 				<section>
-					<section>
-						<h2>Objekt &#x2194 Database</h2>
-					</section>
 					<section>
 						C#
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
@@ -141,7 +138,7 @@
 				</section>
 				<section>
 					<section>
-						<h2>Not your grandfather's ORM</h2>
+						<h2>FSharp.Data.SqlClient</h2>
 					</section>
 					<section>
 						SQL i F#
@@ -178,6 +175,31 @@
 											|> OptionUtils.getOrNull
 									}
 									|> Async.StartAsTask
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Why?</h2>
+						<img class="fragment current-visible" src="/images/cat.gif" width="400px" height="400px"/>
+					</section>
+					<section>
+						Trinn --> TrinnFra og TrinnTil
+						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
+							module GetProveQuery = 
+								open FSharp.Data
+								open UDIR.Prover.Models    
+								type private Query = SqlCommandProvider<"
+									SELECT
+										[Provenummer],
+										[Fag],
+										[Trinn]
+									FROM
+										[Prove].[Prove]
+									WHERE
+										Provenummer = @provenummer"
+									, DbName
+									, SingleRow = true>
 						</code></pre>
 					</section>
 				</section>
