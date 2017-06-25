@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
-
+		<title>Typesikkerhet i datalaget med F#</title>
+		<link rel="icon" href="/images/favicon.png">
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
 		<link rel="stylesheet" href="css/custom.css">
@@ -29,7 +29,7 @@
 				<section><h2>Typesikkerhet i datalaget med F#</h2></section>
 				<section>
 					<section>
-						Typet datalag
+							<h3>Statisk typesikkerhet</h3>
 					</section>
 					<section>
 						<p>Unngå runtime-feil</p>
@@ -65,6 +65,24 @@
 					</section>
 				</section>
 				<section>
+					<section>
+						<h3>PAS - eksamen</h3>
+						<img src="/images/pas2.png"/>
+						<div class="fragment">
+							<h3>PAS - prøver</h3>
+							<p>???</p>
+						</div>
+					</section>
+					<section>
+						<h3>Datakilde &#8596 Modell</h3>
+					</section>
+					<section>
+						<ul>
+							<li>SQL</li>
+							<li>Ytelse i datalaget</li>
+							<li>Unngå testing av datalaget</li>
+						</ul>
+					</section>
 					<section>
 						C#
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
@@ -139,6 +157,7 @@
 				<section>
 					<section>
 						<h2>FSharp.Data.SqlClient</h2>
+						<p>Databaseconnection</p>
 					</section>
 					<section>
 						SQL i F#
@@ -184,6 +203,9 @@
 						<img class="fragment current-visible" src="/images/cat.gif" width="400px" height="400px"/>
 					</section>
 					<section>
+						Ingen sanity checks
+					</section>
+					<section>
 						Trinn --> TrinnFra og TrinnTil
 						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
 							module GetProveQuery = 
@@ -202,6 +224,9 @@
 									, SingleRow = true>
 						</code></pre>
 					</section>
+				</section>
+				<section>
+					
 				</section>
 			</div>
 		</div>
