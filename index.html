@@ -60,7 +60,7 @@
 							<p class="red_txt">JPA</p>
 						</div>
 						<div class="fragment">
-							<p class="green_txt blink_me">F#</hp>
+							<p class="green_txt blink_me">F#</p>
 						</div>
 					</section>
 				</section>
@@ -199,7 +199,7 @@
 				</section>
 				<section>
 					<section>
-						<h2>Why?</h2>
+						<h2>Hva har vi tjent?</h2>
 						<img class="fragment current-visible" src="/images/cat.gif" width="400px" height="400px"/>
 					</section>
 					<section>
@@ -239,9 +239,36 @@
 									, SingleRow = true>
 						</code></pre>
 					</section>
+					<section>
+						<h2 class="title_green blink_me">F#</h2>
+					</section>
 				</section>
 				<section>
-					
+					<section>
+						<h2>Kostnad</h2>
+						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
+								let RunAsync(proveId: int) = 
+									async { 
+										let! result = (Query.Create()).AsyncExecute(proveId)
+										return
+											result
+											|> Option.map (fun e -> 
+												new Prove(
+													ProveId.From(e.Id),
+													e.Provetype_Id,
+													e.FagFerdighet_Id,
+													e.Trinn,
+													OptionUtils.toNullable e.Utprovingsnummer,
+													OptionUtils.toNullable e.Passordsett_Id,
+													OptionUtils.getOrNull e.Beskrivelse,
+													OptionUtils.getOrNull e.PgscProveId,
+													OptionUtils.toNullable e.Skaringsfrist,
+												OptionUtils.getOrNull e.Kode))
+										|> OptionUtils.getOrNull
+								}
+								|> Async.StartAsTask
+						</code></pre>
+					</section>
 				</section>
 			</div>
 		</div>
