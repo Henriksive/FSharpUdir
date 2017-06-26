@@ -204,6 +204,21 @@
 					</section>
 					<section>
 						Ingen sanity checks
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 14px;">
+							public void get_eksamensperiode_by_id()
+							{
+								var ep = _repo.Get(KandidatpåmeldingId.From(127));
+
+								ep.Id.Should().Be(100);
+								ep.Semester_Id.Should().Be(Semester.Vår);
+								ep.År.Should().Be(2016);
+								ep.Påmelding_StartUtc.Should().Be(DateTime.Parse("2016-01-10 23:00:00.000"));
+								ep.Påmelding_StoppUtc.Should().Be(DateTime.Parse("2016-03-01 22:59:59.000"));
+								ep.Sensoroppnevning_StartUtc.Should().Be(DateTime.Parse("2016-03-06 23:00:00.000"));
+								ep.SensorpersonaliaEndringsfristUtc.Should().Be(DateTime.Parse("2016-05-31 21:59:59.000"));
+								ep.KlagepersonaliaEndringsfristUtc.Should().Be(DateTime.Parse("2016-06-30 21:59:59.000"));
+							}
+						</code></pre>
 					</section>
 					<section>
 						Trinn --> TrinnFra og TrinnTil
