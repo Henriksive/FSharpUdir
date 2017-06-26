@@ -29,19 +29,46 @@
 				<section><h2>Typesikkerhet i datalaget med F#</h2></section>
 				<section>
 					<section>
-							<h3>Statisk typesikkerhet</h3>
+						<p>Oppstart August 2016<p>
+						<p>Utdanningsdirektoratet</p>
+						<p>PAS</p>
+					</section>
+					<section>
+						<h3>PAS - eksamen</h3>
+						<img src="/images/pas2.png"/>
+						<div class="fragment">
+							<h3>PAS - prøver</h3>
+							<p>???</p>
+						</div>
+					</section>
+					<section>
+						<ul>
+							<li>SQL</li>
+							<li>Ytelse i datalaget</li>
+							<li>Unngå testing av datalaget</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+							<h3>Statisk typing</h3>
+					</section>
+					<section>
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
+							string a = "Hello world";
+						</code></pre>
 					</section>
 					<section>
 						<p>Unngå runtime-feil</p>
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
-							string tekst = "Hallo verden";
-							int tall = tekst;
+							string a = "Hello world";
+							int b = a;
 						</code></pre>
 					</section>
 					<section>
 						<p>Lesbarhet</p>
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
-							public void Repeat(int antallGanger){ ... }
+							public void Repeat(int x){ ... }
 
 							void Main()
 							{
@@ -60,28 +87,13 @@
 							<p class="red_txt">JPA</p>
 						</div>
 						<div class="fragment">
-							<p class="green_txt blink_me">F#</hp>
+							<p class="green_txt blink_me">F#</p>
 						</div>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h3>PAS - eksamen</h3>
-						<img src="/images/pas2.png"/>
-						<div class="fragment">
-							<h3>PAS - prøver</h3>
-							<p>???</p>
-						</div>
-					</section>
-					<section>
 						<h3>Datakilde &#8596 Modell</h3>
-					</section>
-					<section>
-						<ul>
-							<li>SQL</li>
-							<li>Ytelse i datalaget</li>
-							<li>Unngå testing av datalaget</li>
-						</ul>
 					</section>
 					<section>
 						C#
@@ -199,7 +211,7 @@
 				</section>
 				<section>
 					<section>
-						<h2>Why?</h2>
+						<h2>Hva har vi tjent?</h2>
 						<img class="fragment current-visible" src="/images/cat.gif" width="400px" height="400px"/>
 					</section>
 					<section>
@@ -239,9 +251,51 @@
 									, SingleRow = true>
 						</code></pre>
 					</section>
+					<section>
+						<h2 class="title_green blink_me">F#</h2>
+					</section>
 				</section>
 				<section>
-					
+					<section>
+						<h2>Kostnad</h2>
+						<pre><code class="F#" data-trim contenteditable style="font-size: 14px;">
+								let RunAsync(proveId: int) = 
+									async { 
+										let! result = (Query.Create()).AsyncExecute(proveId)
+										return
+											result
+											|> Option.map (fun e -> 
+												new Prove(
+													ProveId.From(e.Id),
+													e.Provetype_Id,
+													e.FagFerdighet_Id,
+													e.Trinn,
+													OptionUtils.toNullable e.Utprovingsnummer,
+													OptionUtils.toNullable e.Passordsett_Id,
+													OptionUtils.getOrNull e.Beskrivelse,
+													OptionUtils.getOrNull e.PgscProveId,
+													OptionUtils.toNullable e.Skaringsfrist,
+												OptionUtils.getOrNull e.Kode))
+										|> OptionUtils.getOrNull
+								}
+								|> Async.StartAsTask
+						</code></pre>
+					</section>
+					<section>
+						Go to implementation
+						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 14px;">
+							public Prove ExecuteAsync(ProveId proveId)
+							{
+								return GetProveQuery.RunAsync(proveId);
+							}
+						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h2>Oppsummert</h2>
+					<p>Lett å lære</p>
+					<p>Færre runtime-feil</p>
+					<p>Litt ???, men la gå</p>								
 				</section>
 			</div>
 		</div>

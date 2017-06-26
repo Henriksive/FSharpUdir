@@ -13,3 +13,7 @@
 @keyframes blinker {  
   50% { opacity: 0; }
 }
+
+.block2top{
+  margin-top: 20px;
+}
