@@ -104,54 +104,32 @@
 					<section>
 						SQL
 						<pre><code class="SQL" data-trim contenteditable style="font-size: 18px;">
-							INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn)
-							VALUES ('999', 'Norsk', '5')
-						</code></pre>
-					</section>
-					<section>
-						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 10px;">
-							var prove = new Prove(999, "Norsk", 5)
-							var kommando = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) " 
-								+ "VALUES (@provenummer, @fag, @trinn)";
-							using (SqlConnection connection = new SqlConnection("ConnectionStringHere"))
-							{
-								using (SqlCommand command = new SqlCommand())
-								{
-									command.Connection = connection;
-									command.CommandType = CommandType.Text;
-									command.CommandText = kommando;
-									command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
-									command.Parameters.AddWithValue("@fag", prove.Fag);
-									command.Parameters.AddWithValue("@trinn", prove.Trinn);
-
-									connection.Open();
-									int recordsAffected = command.ExecuteNonQuery();
-								}
-							}
+									SELECT
+										[Provenummer],
+										[Fag],
+										[Trinn]
+									FROM
+										[Prove].[Prove]
+									WHERE
+										Provenummer = @provenummer
 						</code></pre>
 					</section>
 					<section>
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
-							var prove = new Prove(999, "Norsk", 5)
-							var kommando = "INSERT INTO [Prove].[Prove] (Provenummer, Fag, Trinn) " 
-								+ "VALUES (@provenummer, @fag, @trinn)";
+							var kommando = "SELECT [Provenummer], [Fag], [Trinn]"
+								+ "FROM [Prove].[Prove] WHERE Provenummer = @provenummer";
 							...
 							command.CommandText = kommando;
-							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
-							command.Parameters.AddWithValue("@fag", prove.Fag);
-							command.Parameters.AddWithValue("@trinn", prove.Trinn);
+							command.Parameters.AddWithValue("@provenummer", 999);
 						</code></pre>
 					</section>
 					<section>
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;" style="word-wrap: break-word;">
-							var prove = new Prove(999, "", 5)
-							var kommando = "INSERT INTO [Prove].[Prøve] (Provenummer, Fag, Trinn) " 
-								+ "VALUES (@provenummer, @fag, @trinn)";
+							var kommando = "SELECT [Provenummer], [Fag], [Trinnn]"
+								+ "FORM [Prøve].[Prøve] WHERE Provenummer = @provenummer";
 							...
 							command.CommandText = kommando;
-							command.Parameters.AddWithValue("@provenummer", prove.Provenummer);
-							command.Parameters.AddWithValue("@fag", prove.Fag);
-							command.Parameters.AddWithValue("@trinn", prove.Fag);
+							command.Parameters.AddWithValue("@provenumer", "norsk");
 						</code></pre>
 					</section>
 				</section>
