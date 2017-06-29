@@ -51,7 +51,10 @@
 				</section>
 				<section>
 					<section>
-							<h3>Statisk typing</h3>
+						<h3>Hva er F#?</h3>
+					</section>
+					<section>
+						<h3>Statisk typing</h3>
 					</section>
 					<section>
 						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 18px;">
@@ -75,20 +78,6 @@
 								Repeat(5);
 							}
 						</code></pre>						
-					</section>
-					<section>
-						<h2>Tech radar 2017</h2>
-						<div class="fragment">
-							<p class="green_txt">Typet Javascript</p>
-							<p class="green_txt">ELM</p>
-							<p class="green_txt">Go</p>
-						</div>
-						<div class="fragment">
-							<p class="red_txt">JPA</p>
-						</div>
-						<div class="fragment">
-							<p class="green_txt blink_me">F#</p>
-						</div>
 					</section>
 				</section>
 				<section>
@@ -203,9 +192,7 @@
 													e.Provenummer,
 													e.Fag,
 													e.Trinn))
-											|> OptionUtils.getOrNull
 									}
-									|> Async.StartAsTask
 						</code></pre>
 					</section>
 				</section>
@@ -215,22 +202,7 @@
 						<img class="fragment current-visible" src="/images/cat.gif" width="400px" height="400px"/>
 					</section>
 					<section>
-						Ingen sanity checks
-						<pre><code class="cs hljs" data-trim contenteditable style="font-size: 14px;">
-							public void get_eksamensperiode_by_id()
-							{
-								var ep = _repo.Get(KandidatpåmeldingId.From(127));
-
-								ep.Id.Should().Be(100);
-								ep.Semester_Id.Should().Be(Semester.Vår);
-								ep.År.Should().Be(2016);
-								ep.Påmelding_StartUtc.Should().Be(DateTime.Parse("2016-01-10 23:00:00.000"));
-								ep.Påmelding_StoppUtc.Should().Be(DateTime.Parse("2016-03-01 22:59:59.000"));
-								ep.Sensoroppnevning_StartUtc.Should().Be(DateTime.Parse("2016-03-06 23:00:00.000"));
-								ep.SensorpersonaliaEndringsfristUtc.Should().Be(DateTime.Parse("2016-05-31 21:59:59.000"));
-								ep.KlagepersonaliaEndringsfristUtc.Should().Be(DateTime.Parse("2016-06-30 21:59:59.000"));
-							}
-						</code></pre>
+						<h3>Ingen unødvendige sanity checks</h3>
 					</section>
 					<section>
 						Trinn --> TrinnFra og TrinnTil
